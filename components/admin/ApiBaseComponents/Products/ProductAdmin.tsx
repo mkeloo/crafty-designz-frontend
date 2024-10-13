@@ -3,6 +3,7 @@
 'use client';
 import GetProducts from './GetProducts';
 import PostProduct from './PostProduct';
+import DeleteProduct from './DeleteProduct';
 import { useState } from 'react';
 import { Product, NewProduct } from '@/lib/types';
 
@@ -31,6 +32,9 @@ const ProductAdmin = () => {
 
       {/* Post Product */}
       <PostProduct onCreate={handleNewProduct} />
+
+      {/* Delete Product */}
+      <DeleteProduct />
     </div>
   );
 };

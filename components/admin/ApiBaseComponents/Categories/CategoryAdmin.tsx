@@ -3,6 +3,7 @@
 'use client';
 import GetCategories from './GetCategories';
 import PostCategory from './PostCategory';
+import DeleteCategory from './DeleteCategory';
 import { useState } from 'react';
 import { Category, NewCategory } from '@/lib/types';
 
@@ -31,6 +32,9 @@ const CategoryAdmin = () => {
 
       {/* Post Category */}
       <PostCategory onCreate={handleNewCategory} />
+
+      {/* Delete Category */}
+      <DeleteCategory />
     </div>
   );
 };

@@ -174,3 +174,68 @@ export const createInventory = async (inventory: NewInventory): Promise<Inventor
     return null;
   }
 };
+
+
+// DELETE REQUESTS
+
+// Delete a category by ID
+export const deleteCategory = async (id: number): Promise<boolean> => {
+  try {
+    const response = await fetch(`${BASE_URL}/categories/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const errorDetail = await response.text();
+      console.error('Error details:', errorDetail);
+      throw new Error('Failed to delete category');
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error deleting category:', error);
+    return false;
+  }
+};
+
+// Delete a product by ID
+export const deleteProduct = async (id: number): Promise<boolean> => {
+  try {
+    const response = await fetch(`${BASE_URL}/products/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const errorDetail = await response.text();
+      console.error('Error details:', errorDetail);
+      throw new Error('Failed to delete product');
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    return false;
+  }
+};
+
+// Delete an inventory item by ID
+export const deleteInventoryItem = async (id: number): Promise<boolean> => {
+  try {
+    const response = await fetch(`${BASE_URL}/inventory/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const errorDetail = await response.text();
+      console.error('Error details:', errorDetail);
+      throw new Error('Failed to delete inventory item');
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error deleting inventory item:', error);
+    return false;
+  }
+};
+
+

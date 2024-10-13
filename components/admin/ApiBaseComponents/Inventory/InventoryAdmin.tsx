@@ -1,6 +1,7 @@
 'use client';
 import GetInventory from './GetInventory';
 import PostInventory from './PostInventory';
+import DeleteInventory from './DeleteInventory';
 import { useState } from 'react';
 import { Inventory, NewInventory } from '@/lib/types';
 
@@ -33,6 +34,9 @@ const InventoryAdmin = () => {
 
       {/* Post Inventory */}
       <PostInventory onCreate={handleNewInventory} />
+
+      {/* Delete Inventory */}
+      <DeleteInventory />
     </div>
   );
 };
