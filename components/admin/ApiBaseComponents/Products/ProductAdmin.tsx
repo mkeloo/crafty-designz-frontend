@@ -16,6 +16,9 @@ const ProductAdmin = () => {
     const createdProduct: Product = {
       ...newProduct,
       product_id: products.length + 1, // Assuming a new ID, can be replaced with actual value
+      stock_quantity: newProduct.stock_quantity || 0, // Provide a default value if undefined
+      last_restocked_date:
+        newProduct.last_restocked_date || new Date().toISOString(), // Provide a default value if undefined
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };

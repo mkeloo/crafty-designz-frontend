@@ -26,6 +26,8 @@ export type Product = {
   price: number;
   discount_price?: number;
   description: string;
+  stock_quantity: number;           // Added stock quantity
+  last_restocked_date: string;      // Added last restocked date
   created_at: string;
   updated_at: string;
 };
@@ -41,7 +43,10 @@ export type NewProduct = {
   price: number;
   discount_price?: number;
   description: string;
+  stock_quantity?: number;          // Added stock quantity (optional for creation)
+  last_restocked_date?: string;     // Added last restocked date (optional for creation)
 };
+
 
 
 

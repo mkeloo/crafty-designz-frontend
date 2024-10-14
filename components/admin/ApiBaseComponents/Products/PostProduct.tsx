@@ -20,6 +20,8 @@ const PostProduct = ({ onCreate }: PostProductProps) => {
     price: 0,
     discount_price: undefined,
     description: '',
+    stock_quantity: 0, // New field for stock quantity
+    last_restocked_date: '', // New field for restocked date
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +52,8 @@ const PostProduct = ({ onCreate }: PostProductProps) => {
             price: 0,
             discount_price: undefined,
             description: '',
+            stock_quantity: 0, // Reset stock quantity to default
+            last_restocked_date: '', // Reset restocked date to default
           });
         }
       } catch (error: any) {
@@ -258,6 +262,51 @@ const PostProduct = ({ onCreate }: PostProductProps) => {
             value={newProduct.description}
             onChange={(e) =>
               setNewProduct({ ...newProduct, description: e.target.value })
+            }
+            className="p-2 text-black w-full rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+        </div>
+
+        {/* Stock Quantity Input */}
+        <div>
+          <label
+            htmlFor="stockQuantity"
+            className="block text-green-400 font-semibold mb-1"
+          >
+            Stock Quantity
+          </label>
+          <input
+            id="stockQuantity"
+            type="number"
+            placeholder="Enter stock quantity"
+            value={newProduct.stock_quantity}
+            onChange={(e) =>
+              setNewProduct({
+                ...newProduct,
+                stock_quantity: parseInt(e.target.value),
+              })
+            }
+            className="p-2 text-black w-full rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+        </div>
+
+        {/* Last Restocked Date Input */}
+        <div>
+          <label
+            htmlFor="lastRestockedDate"
+            className="block text-green-400 font-semibold mb-1"
+          >
+            Last Restocked Date
+          </label>
+          <input
+            id="lastRestockedDate"
+            type="date"
+            value={newProduct.last_restocked_date}
+            onChange={(e) =>
+              setNewProduct({
+                ...newProduct,
+                last_restocked_date: e.target.value,
+              })
             }
             className="p-2 text-black w-full rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
           />
