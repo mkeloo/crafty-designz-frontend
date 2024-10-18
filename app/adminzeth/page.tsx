@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import CategoryAdmin from '@/components/admin/ApiBaseComponents/Categories/CategoryAdmin';
 import ProductAdmin from '@/components/admin/ApiBaseComponents/Products/ProductAdmin';
-import InventoryAdmin from '@/components/admin/ApiBaseComponents/Inventory/InventoryAdmin';
+import InventoryAdmin from '@/components/admin/ApiBaseComponents/zInventory/InventoryAdmin';
 
 const AdminPage = () => {
   const [dbStatus, setDbStatus] = useState<string>('Loading...');
@@ -34,7 +34,7 @@ const AdminPage = () => {
       <ProductAdmin />
 
       {/* Inventory Component */}
-      <InventoryAdmin />
+      {/* <InventoryAdmin /> */}
     </div>
   );
 };

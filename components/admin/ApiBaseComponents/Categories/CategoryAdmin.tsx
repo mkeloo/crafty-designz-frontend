@@ -1,26 +1,38 @@
-// CategoryAdmin.tsx
-
 'use client';
 import GetCategories from './GetCategories';
 import PostCategory from './PostCategory';
+import UpdateCategory from './UpdateCategory';
 import DeleteCategory from './DeleteCategory';
 import { useState } from 'react';
 import { Category, NewCategory } from '@/lib/types';
 
 const CategoryAdmin = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
 
-  // Adjusting handleNewCategory function to accept NewCategory type
+  // Function to handle adding a new category
   const handleNewCategory = (newCategory: NewCategory) => {
-    // Create a new Category object by adding missing fields like id and timestamps
     const createdCategory: Category = {
       ...newCategory,
-      category_id: categories.length + 1, // Assuming a new ID, can be replaced with actual value
+      category_id: categories.length + 1, // Replace with actual value when integrated with API
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
-
     setCategories((prevCategories) => [...prevCategories, createdCategory]);
+  };
+
+  // Function to handle updating an existing category
+  const handleUpdatedCategory = (updatedCategory: Category) => {
+    setCategories((prevCategories) =>
+      prevCategories.map((category) =>
+        category.category_id === updatedCategory.category_id
+          ? updatedCategory
+          : category
+      )
+    );
+    setSelectedCategory(null); // Deselect category after updating
   };
 
   return (
@@ -32,6 +44,9 @@ const CategoryAdmin = () => {
 
       {/* Post Category */}
       <PostCategory onCreate={handleNewCategory} />
+
+      {/* Update Category */}
+      <UpdateCategory onUpdate={handleUpdatedCategory} />
 
       {/* Delete Category */}
       <DeleteCategory />

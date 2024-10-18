@@ -176,6 +176,67 @@ export const createInventory = async (inventory: NewInventory): Promise<Inventor
 };
 
 
+// UPDATE REQUESTS
+
+// Update a category by ID
+export const updateCategory = async (
+  id: number,
+  updatedCategory: NewCategory
+): Promise<Category | null> => {
+  try {
+    const response = await fetch(`${BASE_URL}/categories/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedCategory),
+    });
+
+    if (!response.ok) {
+      const errorDetail = await response.text();
+      console.error('Error details:', errorDetail);
+      throw new Error('Failed to update category');
+    }
+
+    const data: Category = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error updating category:', error);
+    return null;
+  }
+};
+
+// Update a product by ID
+export const updateProduct = async (
+  id: number,
+  updatedProduct: NewProduct
+): Promise<Product | null> => {
+  try {
+    const response = await fetch(`${BASE_URL}/products/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedProduct),
+    });
+
+    if (!response.ok) {
+      const errorDetail = await response.text();
+      console.error('Error details:', errorDetail);
+      throw new Error('Failed to update product');
+    }
+
+    const data: Product = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error updating product:', error);
+    return null;
+  }
+};
+
+
+
+
 // DELETE REQUESTS
 
 // Delete a category by ID
