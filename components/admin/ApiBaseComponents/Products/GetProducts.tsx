@@ -6,7 +6,7 @@ import { fetchProducts, fetchProductById } from '@/lib/api';
 import { Product } from '@/lib/types';
 
 // Dynamically import ReactJson component to avoid SSR error
-const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
+// const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
 
 const GetProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -62,13 +62,13 @@ const GetProducts = () => {
               JSON Response:
             </h2>
             <div className="rounded-full mb-4">
-              <ReactJson
+              {/* <ReactJson
                 src={products}
                 theme="harmonic"
                 collapsed={1}
                 enableClipboard={true}
                 displayDataTypes={true}
-              />
+              /> */}
             </div>
           </>
         )}
@@ -98,13 +98,13 @@ const GetProducts = () => {
             <h4 className="text-xl text-green-400 font-semibold mb-3">
               Selected Product:
             </h4>
-            <ReactJson
+            {/* <ReactJson
               src={selectedProduct}
               theme="harmonic"
               collapsed={1}
               enableClipboard={true}
               displayDataTypes={true}
-            />
+            /> */}
           </div>
         )}
       </div>

@@ -1,12 +1,12 @@
-'use client';
-import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import ApiUrlBlock from '@/components/admin/dataAPI/ApiURLblock';
-import { fetchInventory, fetchInventoryById } from '@/lib/api';
-import { Inventory } from '@/lib/types';
+"use client";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import ApiUrlBlock from "@/components/admin/dataAPI/ApiURLblock";
+import { fetchInventory, fetchInventoryById } from "@/lib/api";
+import { Inventory } from "@/lib/types";
 
 // Dynamically import ReactJson component to avoid SSR error
-const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
+// const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
 
 const GetInventory = () => {
   const [inventoryItems, setInventoryItems] = useState<Inventory[]>([]);
@@ -64,13 +64,13 @@ const GetInventory = () => {
               JSON Response:
             </h2>
             <div className="rounded-full mb-4">
-              <ReactJson
+              {/* <ReactJson
                 src={inventoryItems}
                 theme="harmonic"
                 collapsed={1}
                 enableClipboard={true}
                 displayDataTypes={true}
-              />
+              /> */}
             </div>
           </>
         )}
@@ -100,13 +100,13 @@ const GetInventory = () => {
             <h4 className="text-xl text-green-400 font-semibold mb-3">
               Selected Inventory Item:
             </h4>
-            <ReactJson
+            {/* <ReactJson
               src={selectedInventory}
               theme="harmonic"
               collapsed={1}
               enableClipboard={true}
               displayDataTypes={true}
-            />
+            /> */}
           </div>
         )}
       </div>

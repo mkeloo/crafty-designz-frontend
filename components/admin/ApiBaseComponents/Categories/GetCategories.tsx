@@ -1,12 +1,12 @@
-'use client';
-import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import ApiUrlBlock from '@/components/admin/dataAPI/ApiURLblock';
-import { fetchCategories, fetchCategoryById } from '@/lib/api';
-import { Category } from '@/lib/types';
+"use client";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import ApiUrlBlock from "@/components/admin/dataAPI/ApiURLblock";
+import { fetchCategories, fetchCategoryById } from "@/lib/api";
+import { Category } from "@/lib/types";
 
 // Dynamically import ReactJson component to avoid SSR error
-const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
+// const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
 
 const GetCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -64,13 +64,13 @@ const GetCategories = () => {
               JSON Response:
             </h2>
             <div className="rounded-full mb-4">
-              <ReactJson
+              {/* <ReactJson
                 src={categories}
                 theme="harmonic"
                 collapsed={1}
                 enableClipboard={true}
                 displayDataTypes={true}
-              />
+              /> */}
             </div>
           </>
         )}
@@ -100,13 +100,13 @@ const GetCategories = () => {
             <h4 className="text-xl text-green-400 font-semibold mb-3">
               Selected Category:
             </h4>
-            <ReactJson
+            {/* <ReactJson
               src={selectedCategory}
               theme="harmonic"
               collapsed={1}
               enableClipboard={true}
               displayDataTypes={true}
-            />
+            /> */}
           </div>
         )}
       </div>
