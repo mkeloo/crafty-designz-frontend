@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Search, ShoppingCart, User } from "lucide-react";
 import ExampleComponent from "./ExampleComponent";
@@ -12,6 +12,7 @@ const Navbar = () => {
   const [hoveredContent, setHoveredContent] = useState<string | null>(null);
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
   const [isLinkDropdownOpen, setIsLinkDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const dropdownVariants = {
     open: {
@@ -46,10 +47,22 @@ const Navbar = () => {
     setIsLinkDropdownOpen(false); // Close link content when hovering over icons
   };
 
-  const handleDropdownMouseLeave = () => {
-    setIsLinkDropdownOpen(false);
-    setHoveredIcon(null);
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsLinkDropdownOpen(false);
+      setHoveredIcon(null);
+    }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="absolute top-6 right-12 h-[64px] w-[846px] bg-yellow-400 shadow-lg z-10 rounded-sm flex items-center group/content">
@@ -74,12 +87,16 @@ const Navbar = () => {
 
         {/* Dropdown Box */}
         <motion.div
-          className="absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-y-auto p-6 opacity-0 invisible group-hover/navlinks:opacity-100 group-hover/navlinks:visible group-hover/content:opacity-100 group-hover/content:visible group-hover/innerContent:opacity-100 group-hover/innerContent:visible transition-opacity duration-300"
-          style={{ height: "40rem" }} // Fixed height with scroll
+          ref={dropdownRef}
+          className={`absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-y-auto p-6 transition-opacity duration-300 ${
+            isLinkDropdownOpen || hoveredIcon
+              ? "opacity-100 visible"
+              : "opacity-0 invisible"
+          }`}
+          style={{ height: "40rem" }}
           variants={dropdownVariants}
           initial="closed"
           animate={hoveredIcon || isLinkDropdownOpen ? "open" : "closed"}
-          onMouseLeave={handleDropdownMouseLeave}
         >
           {/* Conditionally render dropdown menu or specific icon component based on hover state */}
           {isLinkDropdownOpen && !hoveredIcon ? (
