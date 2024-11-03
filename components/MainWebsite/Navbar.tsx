@@ -25,9 +25,9 @@ const Navbar = () => {
       },
     },
     closed: {
-      opacity: 0,
-      height: 0,
-      y: 0,
+      opacity: 1,
+      height: "auto",
+      y: 10,
       transition: { duration: 0.3, when: "afterChildren" },
     },
   };
