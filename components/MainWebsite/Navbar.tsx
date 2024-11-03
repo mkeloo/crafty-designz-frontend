@@ -5,119 +5,13 @@ import { Search, ShoppingCart, User } from "lucide-react";
 import ExampleComponent from "./ExampleComponent";
 import ExampleComponent2 from "./ExampleComponent2";
 import ExampleComponent3 from "./ExampleComponent3";
-
-// Define types for the navigation links and content
-interface NavLinkContent {
-  name: string;
-  href: string;
-  innerContent?: NavLinkContent[];
-}
-
-interface NavLink {
-  name: string;
-  href: string;
-  content: NavLinkContent[];
-  innerContent?: NavLinkContent[];
-}
-
-const navLinks: NavLink[] = [
-  {
-    name: "Shop",
-    href: "#shop",
-    content: [
-      {
-        name: "Women",
-        href: "#all-products",
-        innerContent: [
-          { name: "Shop All", href: "#shop-all" },
-          { name: "Shoes", href: "#shoes" },
-          { name: "Apparel", href: "#apparel" },
-          { name: "Accessories", href: "#accessories" },
-          { name: "New Arrivals", href: "#new-arrivals" },
-          { name: "Last Season", href: "#last-season" },
-          { name: "Shop Pre-Owned", href: "#shop-pre-owned" },
-        ],
-      },
-      {
-        name: "Men",
-        href: "#new-arrivals",
-        innerContent: [
-          { name: "Shop All", href: "#shop-all" },
-          { name: "Shoes", href: "#shoes" },
-          { name: "Apparel", href: "#apparel" },
-          { name: "Accessories", href: "#accessories" },
-          { name: "New Arrivals", href: "#new-arrivals" },
-          { name: "Last Season", href: "#last-season" },
-          { name: "Shop Pre-Owned", href: "#shop-pre-owned" },
-        ],
-      },
-      {
-        name: "Kids",
-        href: "#best-sellers",
-        innerContent: [
-          { name: "Shop All", href: "#shop-all" },
-          { name: "Shoes", href: "#shoes" },
-          { name: "Apparel", href: "#apparel" },
-          { name: "Accessories", href: "#accessories" },
-          { name: "New Arrivals", href: "#new-arrivals" },
-          { name: "Last Season", href: "#last-season" },
-          { name: "Shop Pre-Owned", href: "#shop-pre-owned" },
-        ],
-      },
-      {
-        name: "Shop All",
-        href: "#sale",
-        innerContent: [
-          { name: "Shop All", href: "#shop-all" },
-          { name: "Shoes", href: "#shoes" },
-          { name: "Apparel", href: "#apparel" },
-          { name: "Accessories", href: "#accessories" },
-          { name: "New Arrivals", href: "#new-arrivals" },
-          { name: "Last Season", href: "#last-season" },
-          { name: "Shop Pre-Owned", href: "#shop-pre-owned" },
-        ],
-      },
-      {
-        name: "Featured",
-        href: "#gift-cards",
-        innerContent: [
-          { name: "Shop All", href: "#shop-all" },
-          { name: "Shoes", href: "#shoes" },
-          { name: "Apparel", href: "#apparel" },
-          { name: "Accessories", href: "#accessories" },
-          { name: "New Arrivals", href: "#new-arrivals" },
-          { name: "Last Season", href: "#last-season" },
-          { name: "Shop Pre-Owned", href: "#shop-pre-owned" },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Activities",
-    href: "#activities",
-    content: [
-      { name: "Workshops", href: "#workshops" },
-      { name: "Events", href: "#events" },
-      { name: "Classes", href: "#classes" },
-      { name: "Parties", href: "#parties" },
-    ],
-  },
-  {
-    name: "Explore",
-    href: "#explore",
-    content: [
-      { name: "About Us", href: "#about-us" },
-      { name: "Contact", href: "#contact" },
-      { name: "FAQ", href: "#faq" },
-      { name: "Blog", href: "#blog" },
-    ],
-  },
-];
+import { navLinks, NavLinkContent } from "@/lib/links";
 
 const Navbar = () => {
   const [currentContent, setCurrentContent] = useState<NavLinkContent[]>([]);
-  const [hoveredContent, setHoveredContent] = useState<string | null>(null); // Track hovered content item
-  const [hoveredIcon, setHoveredIcon] = useState<string | null>(null); // Track which icon is hovered
+  const [hoveredContent, setHoveredContent] = useState<string | null>(null);
+  const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
+  const [isLinkDropdownOpen, setIsLinkDropdownOpen] = useState(false);
 
   const dropdownVariants = {
     open: {
@@ -131,27 +25,32 @@ const Navbar = () => {
       },
     },
     closed: {
-      opacity: 1,
-      height: "auto",
-      y: 10,
-      transition: {
-        duration: 0.3,
-        when: "afterChildren",
-      },
+      opacity: 0,
+      height: 0,
+      y: 0,
+      transition: { duration: 0.3, when: "afterChildren" },
     },
   };
 
   const itemVariants = {
-    open: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.2 },
-    },
-    closed: {
-      opacity: 0,
-      x: -10,
-      transition: { duration: 0.2 },
-    },
+    open: { opacity: 1, x: 0, transition: { duration: 0.2 } },
+    closed: { opacity: 0, x: -10, transition: { duration: 0.2 } },
+  };
+
+  const handleLinkHover = (linkContent: NavLinkContent[]) => {
+    setCurrentContent(linkContent);
+    setIsLinkDropdownOpen(true);
+    setHoveredIcon(null); // Close icon content when hovering over links
+  };
+
+  const handleIconHover = (iconName: string) => {
+    setHoveredIcon(iconName);
+    setIsLinkDropdownOpen(false); // Close link content when hovering over icons
+  };
+
+  const handleDropdownMouseLeave = () => {
+    setIsLinkDropdownOpen(false);
+    setHoveredIcon(null);
   };
 
   return (
@@ -163,7 +62,7 @@ const Navbar = () => {
             <div
               key={link.name}
               className="relative"
-              onMouseEnter={() => setCurrentContent(link.content)}
+              onMouseEnter={() => handleLinkHover(link.content)}
             >
               <a
                 href={link.href}
@@ -180,12 +79,11 @@ const Navbar = () => {
           className="absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-hidden p-6 opacity-0 invisible group-hover/navlinks:opacity-100 group-hover/navlinks:visible group-hover/content:opacity-100 group-hover/content:visible group-hover/innerContent:opacity-100 group-hover/innerContent:visible transition-opacity duration-300"
           variants={dropdownVariants}
           initial="closed"
-          animate={
-            hoveredIcon ? "open" : currentContent.length > 0 ? "open" : "closed"
-          }
+          animate={hoveredIcon || isLinkDropdownOpen ? "open" : "closed"}
+          onMouseLeave={handleDropdownMouseLeave}
         >
           {/* Conditionally render dropdown menu or specific icon component based on hover state */}
-          {!hoveredIcon ? (
+          {isLinkDropdownOpen && !hoveredIcon ? (
             <ul className="space-y-4">
               {currentContent.map((item) => (
                 <motion.li
@@ -237,24 +135,20 @@ const Navbar = () => {
                 </motion.li>
               ))}
             </ul>
-          ) : (
-            <div className="mt-4">
-              {hoveredIcon === "search" && <ExampleComponent />}
-              {hoveredIcon === "cart" && <ExampleComponent2 />}
-              {hoveredIcon === "user" && <ExampleComponent3 />}
-            </div>
-          )}
+          ) : hoveredIcon === "search" ? (
+            <ExampleComponent />
+          ) : hoveredIcon === "cart" ? (
+            <ExampleComponent2 />
+          ) : hoveredIcon === "user" ? (
+            <ExampleComponent3 />
+          ) : null}
         </motion.div>
 
         {/* Icons */}
-        <div
-          className="flex items-center space-x-10 px-2"
-          onMouseLeave={() => setHoveredIcon(null)}
-        >
+        <div className="flex items-center space-x-10 px-2">
           <div
             className="relative"
-            onMouseEnter={() => setHoveredIcon("search")}
-            // onMouseLeave={() => setHoveredIcon(null)}
+            onMouseEnter={() => handleIconHover("search")}
           >
             <Search
               strokeWidth={1}
@@ -263,8 +157,7 @@ const Navbar = () => {
           </div>
           <div
             className="relative"
-            onMouseEnter={() => setHoveredIcon("cart")}
-            // onMouseLeave={() => setHoveredIcon(null)}
+            onMouseEnter={() => handleIconHover("cart")}
           >
             <ShoppingCart
               strokeWidth={1}
@@ -273,8 +166,7 @@ const Navbar = () => {
           </div>
           <div
             className="relative"
-            onMouseEnter={() => setHoveredIcon("user")}
-            // onMouseLeave={() => setHoveredIcon(null)}
+            onMouseEnter={() => handleIconHover("user")}
           >
             <User
               strokeWidth={1}
