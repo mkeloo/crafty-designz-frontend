@@ -59,6 +59,15 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      keyframes: {
+        "bg-slide": {
+          "0%": { backgroundPosition: "100% 0" },
+          "100%": { backgroundPosition: "0 0" },
+        },
+      },
+      animation: {
+        "bg-slide": "bg-slide 1s ease forwards",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
