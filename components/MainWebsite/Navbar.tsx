@@ -16,7 +16,6 @@ const Navbar = () => {
   const dropdownVariants = {
     open: {
       opacity: 1,
-      height: "auto",
       y: 10,
       transition: {
         duration: 0.3,
@@ -25,8 +24,7 @@ const Navbar = () => {
       },
     },
     closed: {
-      opacity: 1,
-      height: "auto",
+      opacity: 0,
       y: 10,
       transition: { duration: 0.3, when: "afterChildren" },
     },
@@ -76,7 +74,8 @@ const Navbar = () => {
 
         {/* Dropdown Box */}
         <motion.div
-          className="absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-hidden p-6 opacity-0 invisible group-hover/navlinks:opacity-100 group-hover/navlinks:visible group-hover/content:opacity-100 group-hover/content:visible group-hover/innerContent:opacity-100 group-hover/innerContent:visible transition-opacity duration-300"
+          className="absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-y-auto p-6 opacity-0 invisible group-hover/navlinks:opacity-100 group-hover/navlinks:visible group-hover/content:opacity-100 group-hover/content:visible group-hover/innerContent:opacity-100 group-hover/innerContent:visible transition-opacity duration-300"
+          style={{ height: "40rem" }} // Fixed height with scroll
           variants={dropdownVariants}
           initial="closed"
           animate={hoveredIcon || isLinkDropdownOpen ? "open" : "closed"}
