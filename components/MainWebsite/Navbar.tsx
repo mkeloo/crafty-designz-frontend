@@ -7,6 +7,7 @@ import ExampleComponent2 from "./ExampleComponent2";
 import ExampleComponent3 from "./ExampleComponent3";
 import { navLinks, NavLinkContent } from "@/lib/links";
 import CustomCursor from "./CustomCursor";
+import CustomSvgCursor from "./CustomSVGCursor";
 
 const Navbar = () => {
   const [currentContent, setCurrentContent] = useState<NavLinkContent[]>([]);
@@ -77,7 +78,9 @@ const Navbar = () => {
 
   return (
     <>
-      <CustomCursor isVisible={showCustomCursor} />
+      {/* <CustomCursor isVisible={showCustomCursor} /> */}
+      <CustomSvgCursor isVisible={showCustomCursor} />
+      
       <div className="absolute top-6 right-12 h-[64px] w-[846px] bg-yellow-400 shadow-lg z-10 rounded-sm flex items-center group/content">
         <div className="flex items-center justify-between w-full max-w-4xl m-auto px-10 py-2 relative group/navlinks">
           {/* Navigation Links */}
