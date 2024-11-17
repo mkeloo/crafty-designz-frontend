@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Title from "./ReusableComponents/Title";
 import Image from "next/image";
 import CountdownTimer from "./ReusableComponents/CountdownTimer";
@@ -7,6 +6,35 @@ import { productCollections } from "@/lib/data";
 
 const ProductCollections = () => {
     const [activeTab, setActiveTab] = useState("All Products");
+    const [highlightedIndex, setHighlightedIndex] = useState(0); // Index of the highlighted product
+    const cardRefs = useRef<(HTMLDivElement | null)[]>([]); // Refs for each product card
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
+                        setHighlightedIndex(index);
+                    }
+                });
+            },
+            {
+                root: null, // Viewport is the root
+                threshold: 0.6, // Trigger when 60% of the card is visible
+            }
+        );
+
+        cardRefs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            cardRefs.current.forEach((ref) => {
+                if (ref) observer.unobserve(ref);
+            });
+        };
+    }, []);
 
     // Filter products based on active tab
     const filteredProducts =
@@ -36,12 +64,22 @@ const ProductCollections = () => {
             </div>
 
             {/* Product Cards */}
-            <div className="mt-12 overflow-x-scroll scrollbar-hidden ml-[200px]">
-                <div className="flex space-x-6 w-max">
-                    {filteredProducts.map((product) => (
+            <div className="mt-12 h-[90vh] overflow-x-auto scrollbar-hidden relative">
+                {/* Add padding to ensure space for scaling */}
+                <div className="flex space-x-4 w-max mx-20 py-10">
+                    {filteredProducts.map((product, index) => (
                         <div
                             key={product.id}
-                            className="min-w-[350px] rounded-2xl  overflow-hidden relative bg-white flex flex-col"
+                            ref={(el) => {
+                                cardRefs.current[index] = el; // Assign each card to its ref
+                            }}
+                            className={`min-w-[380px] rounded-2xl overflow-hidden relative bg-white flex flex-col transform transition-transform ${highlightedIndex === index
+                                ? "scale-105 shadow-xl z-10"
+                                : "scale-90"
+                                }`}
+                            style={{
+                                transition: "transform 0.3s ease-in-out",
+                            }}
                         >
                             {/* Discount Badge */}
                             {product.discount_badge && (
@@ -89,7 +127,7 @@ const ProductCollections = () => {
                                 </div>
 
                                 {/* Shop Now Button */}
-                                <div className="flex items-center justify-center mt-auto p-4">
+                                <div className="flex items-center justify-center px-4 py-2 pb-4">
                                     <a
                                         href={product.link}
                                         className="bg-[#244927] text-white py-4 px-6 rounded-full flex items-center justify-center hover:bg-[#1e3f21] transition-colors"
