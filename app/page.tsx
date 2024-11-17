@@ -1,7 +1,7 @@
-import Navbar from "@/components/MainWebsite/Navbar";
-import FooterBottom from "@/components/MainWebsite/FooterBottom";
-import FAQ from "@/components/MainWebsite/FAQ";
-import Hero from "@/components/MainWebsite/Hero";
+import Navbar from "@/components/Home/Navbar";
+import FooterBottom from "@/components/Home/FooterBottom";
+import FAQ from "@/components/Home/FAQ";
+import Hero from "@/components/Home/Hero";
 
 export default function Home() {
   return (
