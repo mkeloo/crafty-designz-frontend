@@ -2,12 +2,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Search, ShoppingCart, User } from "lucide-react";
-import ExampleComponent from "./ExampleComponent";
-import ExampleComponent2 from "./ExampleComponent2";
-import ExampleComponent3 from "./ExampleComponent3";
+import ExampleComponent from "./ExampleStuff/ExampleComponent";
+import ExampleComponent2 from "./ExampleStuff/ExampleComponent2";
+import ExampleComponent3 from "./ExampleStuff/ExampleComponent3";
 import { navLinks, NavLinkContent } from "@/lib/links";
-import CustomCursor from "./CustomCursor";
-import CustomSvgCursor from "./CustomSVGCursor";
+// import CustomCursor from "./ExampleStuff/CustomCursor";
+// import CustomSvgCursor from "./ExampleStuff/CustomSVGCursor";
 
 const Navbar = () => {
   const [currentContent, setCurrentContent] = useState<NavLinkContent[]>([]);
@@ -79,8 +79,8 @@ const Navbar = () => {
   return (
     <>
       {/* <CustomCursor isVisible={showCustomCursor} /> */}
-      <CustomSvgCursor isVisible={showCustomCursor} />
-      
+      {/* <CustomSvgCursor isVisible={showCustomCursor} /> */}
+
       <div className="absolute top-6 right-12 h-[64px] w-[846px] bg-yellow-400 shadow-lg z-10 rounded-sm flex items-center group/content">
         <div className="flex items-center justify-between w-full max-w-4xl m-auto px-10 py-2 relative group/navlinks">
           {/* Navigation Links */}
@@ -104,11 +104,10 @@ const Navbar = () => {
           {/* Dropdown Box */}
           <motion.div
             ref={dropdownRef}
-            className={`absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-y-auto p-6 transition-opacity duration-300 ${
-              isLinkDropdownOpen || hoveredIcon
+            className={`absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-y-auto p-6 transition-opacity duration-300 ${isLinkDropdownOpen || hoveredIcon
                 ? "opacity-100 visible"
                 : "opacity-0 invisible"
-            }`}
+              }`}
             style={{ height: "40rem" }}
             variants={dropdownVariants}
             initial="closed"
