@@ -70,8 +70,8 @@ const ProductCollections = () => {
                         key={tab}
                         onClick={() => setActiveTab(tab)}
                         className={`px-6 py-4 rounded-full font-medium ${activeTab === tab
-                                ? "bg-[#244927] text-white"
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            ? "bg-[#244927] text-white"
+                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                             }`}
                     >
                         {tab}
@@ -85,7 +85,7 @@ const ProductCollections = () => {
                 ref={scrollContainerRef}
             >
                 {/* Add padding to ensure space for scaling */}
-                <div className="flex space-x-4 w-max mx-20 py-10">
+                <div className="flex w-max mx-20 py-10">
                     {filteredProducts.map((product, index) => (
                         <div
                             key={product.id}
@@ -93,8 +93,8 @@ const ProductCollections = () => {
                                 cardRefs.current[index] = el; // Assign each card to its ref
                             }}
                             className={`min-w-[380px] rounded-2xl overflow-hidden relative bg-white flex flex-col transform transition-transform ${highlightedIndex === index
-                                    ? "scale-105 shadow-xl z-10"
-                                    : "scale-90"
+                                ? "scale-100 shadow-xl z-10 ring-4 ring-[#244927]"
+                                : "scale-75"
                                 }`}
                             style={{
                                 transition: "transform 0.3s ease-in-out",
@@ -120,8 +120,8 @@ const ProductCollections = () => {
                                 {/* Countdown Timer or Placeholder */}
                                 <div
                                     className={`text-black h-16 text-center rounded-b-lg flex items-center justify-center ${product.flash_timer
-                                            ? "bg-yellow-500"
-                                            : "bg-gray-300"
+                                        ? "bg-yellow-500"
+                                        : "bg-gray-300"
                                         }`}
                                 >
                                     {product.flash_timer ? (
