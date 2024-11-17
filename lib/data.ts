@@ -1,3 +1,6 @@
+// Purpose: Contains data for the website, such as products, faq, and blog posts.
+
+// FAQ data
 export const faq: { id: number; question: string; answer: string }[] = [
     {
         id: 1,
@@ -58,5 +61,37 @@ export const faq: { id: number; question: string; answer: string }[] = [
         question: "Do you have a bulk order discount for events or businesses?",
         answer:
             "Yes, we offer bulk order discounts for events or businesses. Contact our team for more details on pricing and customization.",
+    },
+];
+
+
+// Shopping Benefits data
+import customerServiceIcon from "@/assets/ShoppingBenefits/customer-service.svg";
+import flexiblePayment from "@/assets/ShoppingBenefits/flexible-payment.svg";
+import freeShipping from "@/assets/ShoppingBenefits/free-shipping.svg";
+
+
+export const shoppingBenefits = [
+    {
+        id: 1,
+        icon: freeShipping,
+        title: "Free Shipping",
+        description:
+            "Enjoy free standard shipping on orders over $100 within the United States.",
+    },
+
+    {
+        id: 2,
+        icon: flexiblePayment,
+        title: "Flexible Payment",
+        description:
+            "We offer a variety of payment options, including credit card, PayPal, and more.",
+    },
+    {
+        id: 3,
+        icon: customerServiceIcon,
+        title: "24/7 Support",
+        description:
+            "Our customer support team is available 24/7 to assist you with any questions or concerns.",
     },
 ];
