@@ -8,31 +8,47 @@ const ProductCollections = () => {
     const [activeTab, setActiveTab] = useState("All Products");
     const [highlightedIndex, setHighlightedIndex] = useState(0); // Index of the highlighted product
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]); // Refs for each product card
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null); // Ref for the scroll container
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
-                        setHighlightedIndex(index);
-                    }
-                });
-            },
-            {
-                root: null, // Viewport is the root
-                threshold: 0.6, // Trigger when 60% of the card is visible
-            }
-        );
+        const handleScroll = () => {
+            if (!scrollContainerRef.current) return;
 
-        cardRefs.current.forEach((ref) => {
-            if (ref) observer.observe(ref);
-        });
+            const container = scrollContainerRef.current;
+            const containerRect = container.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+
+            let minDistance = Infinity;
+            let closestIndex = 0;
+
+            cardRefs.current.forEach((cardRef, index) => {
+                if (cardRef) {
+                    const cardRect = cardRef.getBoundingClientRect();
+                    const cardCenter = cardRect.left + cardRect.width / 2;
+
+                    const distance = Math.abs(containerCenter - cardCenter);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                }
+            });
+
+            setHighlightedIndex(closestIndex);
+        };
+
+        const container = scrollContainerRef.current;
+        if (container) {
+            container.addEventListener('scroll', handleScroll);
+            // Trigger the handler to set the initial highlighted index
+            handleScroll();
+        }
 
         return () => {
-            cardRefs.current.forEach((ref) => {
-                if (ref) observer.unobserve(ref);
-            });
+            if (container) {
+                container.removeEventListener('scroll', handleScroll);
+            }
         };
     }, []);
 
@@ -54,8 +70,8 @@ const ProductCollections = () => {
                         key={tab}
                         onClick={() => setActiveTab(tab)}
                         className={`px-6 py-4 rounded-full font-medium ${activeTab === tab
-                            ? "bg-[#244927] text-white"
-                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                ? "bg-[#244927] text-white"
+                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                             }`}
                     >
                         {tab}
@@ -64,7 +80,10 @@ const ProductCollections = () => {
             </div>
 
             {/* Product Cards */}
-            <div className="mt-12 h-[90vh] overflow-x-auto scrollbar-hidden relative">
+            <div
+                className="mt-12 h-[90vh] overflow-x-auto scrollbar-hidden relative"
+                ref={scrollContainerRef}
+            >
                 {/* Add padding to ensure space for scaling */}
                 <div className="flex space-x-4 w-max mx-20 py-10">
                     {filteredProducts.map((product, index) => (
@@ -74,8 +93,8 @@ const ProductCollections = () => {
                                 cardRefs.current[index] = el; // Assign each card to its ref
                             }}
                             className={`min-w-[380px] rounded-2xl overflow-hidden relative bg-white flex flex-col transform transition-transform ${highlightedIndex === index
-                                ? "scale-105 shadow-xl z-10"
-                                : "scale-90"
+                                    ? "scale-105 shadow-xl z-10"
+                                    : "scale-90"
                                 }`}
                             style={{
                                 transition: "transform 0.3s ease-in-out",
@@ -100,7 +119,9 @@ const ProductCollections = () => {
 
                                 {/* Countdown Timer or Placeholder */}
                                 <div
-                                    className={`text-black h-16 text-center rounded-b-lg flex items-center justify-center ${product.flash_timer ? "bg-yellow-500" : "bg-gray-300"
+                                    className={`text-black h-16 text-center rounded-b-lg flex items-center justify-center ${product.flash_timer
+                                            ? "bg-yellow-500"
+                                            : "bg-gray-300"
                                         }`}
                                 >
                                     {product.flash_timer ? (
@@ -115,7 +136,9 @@ const ProductCollections = () => {
                                 {/* Product Info */}
                                 <div className="p-4 flex-1">
                                     <p className="text-sm text-gray-500">{product.category}</p>
-                                    <h3 className="text-lg font-medium text-gray-900 mt-1">{product.title}</h3>
+                                    <h3 className="text-lg font-medium text-gray-900 mt-1">
+                                        {product.title}
+                                    </h3>
                                     <div className="flex items-center justify-between mt-2">
                                         <div className="text-lg font-bold text-[#244927]">
                                             ${product.discount_price.toFixed(2)}
