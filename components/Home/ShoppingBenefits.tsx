@@ -8,8 +8,7 @@ const ShoppingBenefits = () => {
             {shoppingBenefits.map((benefit, index) => (
                 <div
                     key={benefit.id}
-                    className={`relative flex items-center space-x-4 text-left ${index !== 0 ? "pl-8" : ""
-                        }`}
+                    className={`relative flex items-center space-x-4 text-left flex-1 ${index !== 0 ? "pl-8" : ""}`}
                 >
                     {/* Divider for items 2 and 3 */}
                     {index !== 0 && (
@@ -31,8 +30,8 @@ const ShoppingBenefits = () => {
 
                     {/* Title and Description */}
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900">{benefit.title}</h3>
-                        <p className="text-sm text-gray-600">{benefit.description}</p>
+                        <h3 className="text-2xl font-inter font-medium text-gray-900 mb-1">{benefit.title}</h3>
+                        <p className="text-md text-gray-600">{benefit.description}</p>
                     </div>
                 </div>
             ))}

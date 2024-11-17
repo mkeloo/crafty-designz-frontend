@@ -76,22 +76,50 @@ export const shoppingBenefits = [
         id: 1,
         icon: freeShipping,
         title: "Free Shipping",
-        description:
-            "Enjoy free standard shipping on orders over $100 within the United States.",
+        description: "Free standard shipping on orders over $100.",
     },
 
     {
         id: 2,
         icon: flexiblePayment,
         title: "Flexible Payment",
-        description:
-            "We offer a variety of payment options, including credit card, PayPal, and more.",
+        description: "Multiple payment options like credit card and PayPal.",
     },
     {
         id: 3,
         icon: customerServiceIcon,
         title: "24/7 Support",
-        description:
-            "Our customer support team is available 24/7 to assist you with any questions or concerns.",
+        description: "24/7 customer support for your convenience.",
+    },
+];
+
+
+
+// Deal Of Day data
+
+import deal1 from "@/assets/DealOfDay/deal1.png";
+import deal2 from "@/assets/DealOfDay/deal2.png";
+
+
+export const dealOfDay = [
+    {
+        id: 1,
+        image: deal1,
+        tagline: "Deal of the Day",
+        title: "Chunky Knit Blanket",
+        description: "Stay cozy with our chunky knit blanket, now 20% off!",
+        link: "/products/1",
+        price: 99.99,
+        discount: 20,
+    },
+    {
+        id: 2,
+        image: deal2,
+        tagline: "Hot Deal",
+        title: "Luxury Throw Pillow",
+        description: "Add a touch of elegance with our luxury throw pillow, now 30% off!",
+        link: "/products/2",
+        price: 49.99,
+        discount: 30,
     },
 ];
