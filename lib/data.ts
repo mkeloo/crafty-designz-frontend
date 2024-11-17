@@ -123,3 +123,58 @@ export const dealOfDay = [
         discount: 30,
     },
 ];
+
+
+
+// Product Collections data
+import product1 from "@/assets/ProductCollections/product1.png";
+import product2 from "@/assets/ProductCollections/product2.png";
+import product3 from "@/assets/ProductCollections/product3.png";
+import product4 from "@/assets/ProductCollections/product4.png";
+
+
+export const productCollections = [
+    {
+        id: 1,
+        image: product1,
+        discount_badge: 20,
+        category: "Chunky Blankets",
+        title: "Chiefs Medium Throw Blanket",
+        price: 129.99,
+        discount_price: 99.99,
+        link: "/products/1",
+        flash_timer: "5days",
+    },
+    {
+        id: 2,
+        image: product2,
+        discount_badge: 20,
+        category: "Chunky Blankets",
+        title: "Jaguars Short Throw Blanket",
+        price: 129.99,
+        discount_price: 99.99,
+        link: "/products/2",
+    },
+    {
+        id: 3,
+        image: product3,
+        discount_badge: 20,
+        category: "Chunky Blankets",
+        title: "Vikings Medium Throw Blanket",
+        price: 129.99,
+        discount_price: 99.99,
+        link: "/products/3",
+        flash_timer: "2days",
+    },
+    {
+        id: 4,
+        image: product4,
+        discount_badge: 20,
+        category: "Chunky Blankets",
+        title: "Chiefs Medium Throw Blanket",
+        price: 129.99,
+        discount_price: 99.99,
+        link: "/products/4",
+    },
+
+];

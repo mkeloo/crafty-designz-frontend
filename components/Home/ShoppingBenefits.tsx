@@ -17,7 +17,7 @@ const ShoppingBenefits = () => {
 
                     {/* Icon with badge */}
                     <div className="relative flex-shrink-0">
-                        <div className="relative z-10">
+                        <div className="relative z-0">
                             <Image
                                 width={32}
                                 height={32}
