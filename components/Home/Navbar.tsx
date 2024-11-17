@@ -6,7 +6,7 @@ import ExampleComponent from "./ExampleStuff/ExampleComponent";
 import ExampleComponent2 from "./ExampleStuff/ExampleComponent2";
 import ExampleComponent3 from "./ExampleStuff/ExampleComponent3";
 import { navLinks, NavLinkContent } from "@/lib/links";
-// import CustomCursor from "./ExampleStuff/CustomCursor";
+import CustomCursor from "./ExampleStuff/CustomCursor";
 // import CustomSvgCursor from "./ExampleStuff/CustomSVGCursor";
 
 const Navbar = () => {
@@ -78,7 +78,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* <CustomCursor isVisible={showCustomCursor} /> */}
+      <CustomCursor isVisible={showCustomCursor} />
       {/* <CustomSvgCursor isVisible={showCustomCursor} /> */}
 
       <div className="absolute top-6 right-12 h-[64px] w-[846px] bg-yellow-400 shadow-lg z-10 rounded-sm flex items-center group/content">
@@ -105,8 +105,8 @@ const Navbar = () => {
           <motion.div
             ref={dropdownRef}
             className={`absolute top-full left-0 w-full bg-white shadow-lg rounded-b-lg overflow-y-auto p-6 transition-opacity duration-300 ${isLinkDropdownOpen || hoveredIcon
-                ? "opacity-100 visible"
-                : "opacity-0 invisible"
+              ? "opacity-100 visible"
+              : "opacity-0 invisible"
               }`}
             style={{ height: "40rem" }}
             variants={dropdownVariants}

@@ -45,7 +45,7 @@ const ProductCollections = () => {
                         >
                             {/* Discount Badge */}
                             {product.discount_badge && (
-                                <span className="absolute top-4 left-2 bg-[#244927] text-white text-xs font-bold py-2 px-2 rounded-2xl">
+                                <span className="absolute top-4 left-3 bg-[#244927] text-white text-xs font-bold py-2 px-2 rounded-2xl">
                                     {product.discount_badge}% OFF
                                 </span>
                             )}
