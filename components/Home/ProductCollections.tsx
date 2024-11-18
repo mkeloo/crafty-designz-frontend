@@ -101,7 +101,7 @@ const ProductCollections = () => {
                 ref={scrollContainerRef}
             >
                 {/* Add padding to ensure space for scaling */}
-                <div className="flex w-max mx-10 py-10">
+                <div className="flex w-max mx-10 py-6">
                     {duplicatedProducts.map((product, index) => {
                         // Calculate the index relative to the original product list
                         const actualIndex = index % filteredProducts.length;
@@ -122,7 +122,12 @@ const ProductCollections = () => {
                             >
                                 {/* Discount Badge */}
                                 {product.discount_badge && (
-                                    <span className="absolute top-4 left-3 bg-[#244927] text-white text-xs font-bold py-2 px-2 rounded-2xl">
+                                    <span className="absolute top-4 left-3 bg-[#244927] text-white text-xs font-bold py-2 px-2 rounded-2xl" style={{
+                                        "--pulse-color": "rgba(255, 0, 0, 0.5)", // Tailwind's red-500 in RGBA
+                                        "--duration": "1.5s",
+                                        width: "auto",
+                                        height: "auto",
+                                    } as React.CSSProperties}>
                                         {product.discount_badge}% OFF
                                     </span>
                                 )}
@@ -176,7 +181,7 @@ const ProductCollections = () => {
                                     </div>
 
                                     {/* Shop Now Button */}
-                                    <div className="flex items-center justify-center px-4 py-2 pb-4">
+                                    <div className="flex items-center justify-center px-4 pb-6">
                                         <a
                                             href={product.link}
                                             className="bg-[#244927] text-white py-4 px-6 rounded-full flex items-center justify-center hover:bg-[#1e3f21] transition-colors"
