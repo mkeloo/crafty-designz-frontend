@@ -261,3 +261,35 @@ export const productCollections = [
         link: "/products/4",
     },
 ];
+
+
+// Total Stock data
+import stock1 from "@/assets/TotalStock/stock1.png";
+import stock2 from "@/assets/TotalStock/stock2.png";
+import stock3 from "@/assets/TotalStock/stock3.png";
+
+
+export const totalStock = [
+    {
+        id: 1,
+        image: stock1,
+        title: "Chairs",
+        totalItems: 1500,
+        description: "Browse our collection of stylish and comfortable chairs.",
+        list: ["short chair", "long chair", "arm chair", "sofa chair", "wooden chair", "plastic chair", "metal chair", "leather chair"],
+    },
+    {
+        id: 2,
+        image: stock2,
+        title: "Sofa",
+        totalItems: 1500,
+        list: ["short sofa", "long sofa", "arm sofa", "wooden sofa",],
+    },
+    {
+        id: 3,
+        image: stock3,
+        title: "Lighting",
+        totalItems: 1500,
+        list: ["table lamp", "floor lamp", "pendant lamp", "chandelier",],
+    },
+]

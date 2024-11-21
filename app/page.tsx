@@ -6,6 +6,7 @@ import Hero from "@/components/Home/Hero";
 import ShoppingBenefits from "@/components/Home/ShoppingBenefits";
 import DealOfDay from "@/components/Home/DealOfDay";
 import ProductCollections from "@/components/Home/ProductCollections";
+import TotalStock from "@/components/Home/TotalStock";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <main className="w-full max-w-screen-2xl mx-auto">
         <Hero />
         <ShoppingBenefits />
+        <TotalStock />
         <ProductCollections />
         <DealOfDay />
         <FAQ />
