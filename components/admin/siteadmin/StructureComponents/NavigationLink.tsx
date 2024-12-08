@@ -6,24 +6,25 @@ interface NavigationLinkProps {
     name: string;
     isOpen: boolean;
     onClick?: () => void; // New onClick prop
+    className?: string; // Add optional className prop
 }
 
-const NavigationLink = ({ children, name, isOpen, onClick }: NavigationLinkProps) => {
+const NavigationLink = ({ children, name, isOpen, onClick, className }: NavigationLinkProps) => {
     return (
         <motion.a
             href="#"
             onClick={onClick}
-            className="relative flex cursor-pointer p-2 rounded-lg stroke-[1.75] hover:stroke-neutral-100 stroke-neutral-400 text-neutral-400 hover:text-white place-items-center gap-3 transition-colors duration-100"
+            className={`flex cursor-pointer p-2 rounded-lg stroke-[1.75] hover:stroke-neutral-100 stroke-neutral-400 text-neutral-400 hover:text-white place-items-center gap-3 hover:bg-neutral-700/30 transition-colors duration-100 ${className}`}
         >
             {/* Hover effect for collapsed sidebar */}
             {!isOpen && (
                 <motion.div
                     initial={{
-                        opacity: 0, scale: 0.9, backgroundColor: "rgba(101, 163, 13, 0.7)", // Lime green background
+                        opacity: 0, scale: 0.9,
                     }}
                     whileHover={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute inset-0 bg-lime-700/50 rounded-lg -z-10"
+                    className="absolute inset-0  rounded-lg -z-10"
                 />
             )}
 

@@ -8,7 +8,7 @@ const SiteAdminPage = () => {
     const [currentPage, setCurrentPage] = useState('Dashboard'); // Track current page
 
     return (
-        <main className="w-full h-screen flex flex-row relative bg-black">
+        <main className="w-full min-h-screen h-fit flex flex-row relative bg-black">
             {/* Sidebar */}
             <Navigation
                 isSidebarOpen={isSidebarOpen}
@@ -19,14 +19,14 @@ const SiteAdminPage = () => {
             {/* Main Content */}
             <motion.section
                 animate={{
-                    marginLeft: isSidebarOpen ? '16rem' : '4.5rem', // Adjust margin based on sidebar state
+                    marginLeft: isSidebarOpen ? '16rem' : '5.5rem', // Adjust margin based on sidebar state
                 }}
                 transition={{
                     type: 'spring',
                     damping: 15,
                     stiffness: 100,
                 }}
-                className="flex flex-col p-10 w-full gap-5"
+                className="flex flex-col p-10 w-full min-h-screen h-fit gap-5"
             >
                 <h1 className="text-4xl text-neutral-200">{currentPage}</h1> {/* Dynamic page title */}
                 <div className="w-full h-80 border border-neutral-500/50 bg-neutral-800/20 rounded" />
