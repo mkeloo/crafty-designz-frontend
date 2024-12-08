@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, CalendarDays, Clock } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const HeaderBar = () => {
     const [currentTime, setCurrentTime] = useState('');
@@ -42,7 +43,26 @@ const HeaderBar = () => {
                     <CalendarDays className="w-5 h-5 text-gray-300" />
                     <span>{currentDate}</span>
                 </span>
-                <User className="w-6 h-6 text-gray-300" />
+
+                {/* Popover for User Icon */}
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <span className="p-2.5 flex items-center justify-center rounded-full bg-neutral-600 cursor-pointer">
+                            <User className="w-6 h-6 text-gray-300" />
+                        </span>
+                    </PopoverTrigger>
+                    <PopoverContent className="flex flex-col items-start justify-center p-4 bg-neutral-800 text-white rounded-lg shadow-lg space-y-2 max-w-fit mx-4">
+                        <p className="text-sm font-semibold">Admin</p>
+                        <a
+                            href="/"
+                            className="text-blue-400 font-semibold underline text-sm"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Live Website
+                        </a>
+                    </PopoverContent>
+                </Popover>
             </div>
         </div>
     );

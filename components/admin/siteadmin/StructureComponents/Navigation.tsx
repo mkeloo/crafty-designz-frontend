@@ -84,55 +84,55 @@ const Navigation = ({
     const navigationLinks = [
         {
             name: "Dashboard",
-            icon: <ChartArea strokeWidth={2} className="stroke-[0.75] min-w-8 w-8" />,
+            icon: <ChartArea strokeWidth={2} className="min-w-8 w-8" />,
         },
         {
             name: "Projects",
-            icon: <SquareStack strokeWidth={2} className="stroke-[0.75] min-w-8 w-8" />,
+            icon: <SquareStack strokeWidth={2} className="min-w-8 w-8" />,
             subLinks: [
                 {
                     name: "Active Projects",
-                    icon: <ChartSpline strokeWidth={2} className="stroke-[0.75] w-5 h-5" />,
+                    icon: <ChartSpline strokeWidth={2} className="w-5 h-5" />,
                 },
                 {
                     name: "Archived Projects",
-                    icon: <ArchiveRestore strokeWidth={2} className="stroke-[0.75] w-5 h-5" />,
+                    icon: <ArchiveRestore strokeWidth={2} className=" w-5 h-5" />,
                 },
                 {
                     name: "Create New Project",
-                    icon: <FilePlus strokeWidth={2} className="stroke-[0.75] w-5 h-5" />,
+                    icon: <FilePlus strokeWidth={2} className=" w-5 h-5" />,
                 },
             ],
         },
         {
             name: "Tasks",
-            icon: <LayoutList strokeWidth={2} className="stroke-[0.75] min-w-8 w-8" />,
+            icon: <LayoutList strokeWidth={2} className=" min-w-8 w-8" />,
         },
         {
             name: "Reporting",
-            icon: <FileText strokeWidth={2} className="stroke-[0.75] min-w-8 w-8" />,
+            icon: <FileText strokeWidth={2} className=" min-w-8 w-8" />,
         },
         {
             name: "Inventory",
-            icon: <PackageSearch strokeWidth={2} className="stroke-[0.75] min-w-8 w-8" />,
+            icon: <PackageSearch strokeWidth={2} className=" min-w-8 w-8" />,
             subLinks: [
                 {
                     name: "Stock Levels",
-                    icon: <Layers strokeWidth={2} className="stroke-[0.75] w-5 h-5" />,
+                    icon: <Layers strokeWidth={2} className=" w-5 h-5" />,
                 },
                 {
                     name: "Suppliers",
-                    icon: <Factory strokeWidth={2} className="stroke-[0.75] w-5 h-5" />,
+                    icon: <Factory strokeWidth={2} className=" w-5 h-5" />,
                 },
                 {
                     name: "Order History",
-                    icon: <FileClock strokeWidth={2} className="stroke-[0.75] w-5 h-5" />,
+                    icon: <FileClock strokeWidth={2} className=" w-5 h-5" />,
                 },
             ],
         },
         {
             name: "Users",
-            icon: <Users strokeWidth={2} className="stroke-[0.75] min-w-8 w-8" />,
+            icon: <Users strokeWidth={2} className=" min-w-8 w-8" />,
         },
     ];
 
@@ -183,6 +183,7 @@ const Navigation = ({
     const handleSubLinkClick = (name: string) => {
         setActiveLink(name); // Set active link for the clicked sub-link
         setCurrentPage(name); // Update the current page in the main content
+        setSelectedProject(null); // Close the second navbar (Project Navigation)
     };
 
     return (
@@ -191,8 +192,12 @@ const Navigation = ({
                 variants={containerVariants}
                 animate={containerControls}
                 initial="close"
-                className="bg-neutral-900 flex flex-col z-10 gap-20 p-5 absolute top-0 left-0 min-h-screen h-full shadow shadow-neutral-600"
+                style={{
+                    background: 'radial-gradient(circle at top left, rgba(0,255,255,0.25) 0%, #0f172a 20%, #0f172a 40%, #0f172a 60%, #0f172a 80%, #0f172a 100%)'
+                }}
+                className="flex flex-col z-10 gap-20 p-5 shadow shadow-neutral-600 absolute top-0 left-0 h-[100vh] overflow-y-scroll scrollbar-hidden"
             >
+
                 <div className="w-full flex flex-row justify-between place-items-center">
                     {isOpen && (
                         <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-700 rounded-full" />
@@ -220,7 +225,7 @@ const Navigation = ({
                     {navigationLinks.map((link) => (
                         <div key={link.name} className="flex flex-col">
                             <div
-                                className={`flex items-center justify-between ${activeLink === link.name ? "bg-neutral-800 text-white" : "text-neutral-400"
+                                className={`flex items-center justify-between ${activeLink === link.name ? "bg-blue-950 text-cyan-400 font-bold" : "text-neutral-400"
                                     } p-2 rounded-lg cursor-pointer hover:text-white hover:bg-neutral-700/30`}
                                 onClick={(e) => {
                                     e.stopPropagation(); // Prevent bubbling
@@ -262,12 +267,12 @@ const Navigation = ({
                                     {link.subLinks.map((subLink) => (
                                         <div
                                             key={subLink.name}
-                                            className={`cursor-pointer text-neutral-400 hover:text-white hover:bg-neutral-700/30 p-2 rounded-md ${activeLink === subLink.name ? "bg-neutral-800 text-white" : ""
+                                            className={`cursor-pointer text-neutral-400 hover:text-white hover:bg-neutral-700/30 p-2 rounded-md ${activeLink === subLink.name ? "bg-blue-950 text-cyan-400 font-bold" : ""
                                                 }`}
                                             onClick={(e) => {
                                                 e.stopPropagation(); // Prevent bubbling
                                                 handleSubLinkClick(subLink.name);
-                                                setOpenDropdown(null); // Close dropdown on sublink click
+                                                // setOpenDropdown(null); // Close dropdown on sublink click
                                             }}
                                         >
                                             <div className="flex items-center gap-3">
@@ -288,7 +293,10 @@ const Navigation = ({
                         <ProjectLink
                             key={project.name}
                             name={project.name}
-                            setSelectedProject={setSelectedProject} // Ensure this resets the state
+                            setSelectedProject={(name) => {
+                                setSelectedProject(name); // Open the second navbar
+                                setOpenDropdown(null); // Close any open dropdown
+                            }} // Ensure this resets the state
                             setIsOpen={setIsOpen} // Open the sidebar if collapsed
                             isOpen={isOpen}
                         >

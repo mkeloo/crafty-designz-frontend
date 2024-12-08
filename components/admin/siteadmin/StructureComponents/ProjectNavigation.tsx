@@ -35,12 +35,12 @@ interface ProjectNavigationProps {
 
 const projectNavigationData = {
     navigationLinks: [
-        { name: "Progress", icon: <TrendingUp strokeWidth={2} className="stroke-[0.75] stroke-inherit min-w-8 w-8" /> },
-        { name: "Team Members", icon: <UsersRound strokeWidth={2} className="stroke-[0.75] stroke-inherit min-w-8 w-8" /> },
-        { name: "In Review", icon: <Pencil strokeWidth={2} className="stroke-[0.75] stroke-inherit min-w-8 w-8" /> },
-        { name: "In Progress", icon: <Zap strokeWidth={2} className="stroke-[0.75] stroke-inherit min-w-8 w-8" /> },
-        { name: "Up Next", icon: <MousePointerClick strokeWidth={2} className="stroke-[0.75] stroke-inherit min-w-8 w-8" /> },
-        { name: "Project Settings", icon: <SlidersHorizontal strokeWidth={2} className="stroke-[0.75] stroke-inherit min-w-8 w-8" /> },
+        { name: "Progress", icon: <TrendingUp strokeWidth={2} className=" stroke-inherit min-w-8 w-8" /> },
+        { name: "Team Members", icon: <UsersRound strokeWidth={2} className=" stroke-inherit min-w-8 w-8" /> },
+        { name: "In Review", icon: <Pencil strokeWidth={2} className=" stroke-inherit min-w-8 w-8" /> },
+        { name: "In Progress", icon: <Zap strokeWidth={2} className=" stroke-inherit min-w-8 w-8" /> },
+        { name: "Up Next", icon: <MousePointerClick strokeWidth={2} className=" stroke-inherit min-w-8 w-8" /> },
+        { name: "Project Settings", icon: <SlidersHorizontal strokeWidth={2} className=" stroke-inherit min-w-8 w-8" /> },
     ],
     teamMembers: [
         { name: "John Doe", icon: <User strokeWidth={2} className="stroke-rose-800 bg-rose-200/70 w-8 h-8 p-1 rounded-full" /> },
