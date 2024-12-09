@@ -62,6 +62,29 @@ const svgVariants = {
     },
 };
 
+const subMenuVariants = {
+    close: {
+        opacity: 0,
+        y: -10,
+        transition: {
+            type: "spring",
+            damping: 15,
+            duration: 0.3,
+            ease: "easeInOut",
+        },
+    },
+    open: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            type: "spring",
+            damping: 15,
+            duration: 0.3,
+            ease: "easeInOut",
+        },
+    },
+};
+
 interface NavigationProps {
     isSidebarOpen: boolean;
     setIsSidebarOpen: (val: boolean) => void;
@@ -105,11 +128,15 @@ const Navigation = ({
             ],
         },
         {
-            name: "Tasks",
+            name: "Categories",
             icon: <LayoutList strokeWidth={2} className=" min-w-8 w-8" />,
         },
         {
-            name: "Reporting",
+            name: "Subcategories",
+            icon: <FileText strokeWidth={2} className=" min-w-8 w-8" />,
+        },
+        {
+            name: "Products",
             icon: <FileText strokeWidth={2} className=" min-w-8 w-8" />,
         },
         {
@@ -192,7 +219,7 @@ const Navigation = ({
                 variants={containerVariants}
                 animate={containerControls}
                 initial="close"
-                className="bg-gradient-to-br from-cyan-900 to-[#0f172a] flex flex-col z-10 gap-20 p-5 shadow shadow-neutral-600 absolute top-0 left-0 h-[100vh] overflow-y-scroll scrollbar-hidden"
+                className="bg-gradient-to-br from-cyan-900 to-[#0f172a] flex flex-col z-30 gap-20 p-5 shadow shadow-neutral-600 absolute top-0 left-0 h-full overflow-y-scroll scrollbar-hidden"
             >
 
                 <div className="w-full flex flex-row justify-between place-items-center">
@@ -228,7 +255,8 @@ const Navigation = ({
                                     e.stopPropagation(); // Prevent bubbling
                                     handleNavigationClick(link.name); // Navigate to the parent link
                                     if (link.subLinks) {
-                                        toggleDropdown(link.name); // Toggle dropdown
+                                        // Toggle the dropdown logic
+                                        setOpenDropdown((prev) => (prev === link.name ? null : link.name));
                                     }
                                 }}
                             >
@@ -255,16 +283,16 @@ const Navigation = ({
                             {/* SubLinks */}
                             {link.subLinks && openDropdown === link.name && (
                                 <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="pt-2 pl-8 flex flex-col gap-2"
+                                    variants={subMenuVariants}
+                                    initial="close"
+                                    animate="open"
+                                    exit="close"
+                                    className="py-2 px-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-b-xl shadow-2xl flex flex-col gap-2"
                                 >
                                     {link.subLinks.map((subLink) => (
                                         <div
                                             key={subLink.name}
-                                            className={`cursor-pointer text-neutral-400 hover:text-white hover:bg-neutral-700/30 p-2 rounded-md ${activeLink === subLink.name ? "bg-blue-950 text-cyan-400 font-bold" : ""
+                                            className={`cursor-pointer  text-black hover:text-white hover:bg-neutral-700/30 p-2 rounded-md ${activeLink === subLink.name ? "bg-blue-950 text-cyan-400 font-bold" : ""
                                                 }`}
                                             onClick={(e) => {
                                                 e.stopPropagation(); // Prevent bubbling
