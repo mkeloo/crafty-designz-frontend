@@ -5,23 +5,43 @@ import Navigation from "@/components/admin/siteadmin/StructureComponents/Navigat
 import HeaderBar from "@/components/admin/siteadmin/StructureComponents/HeaderBar";
 import { motion } from "framer-motion";
 import DataTable from "@/components/admin/siteadmin/StructureComponents/DataTable";
-// import { fetchCategoriesData } from "@/components/admin/siteadmin/DataComponents/CategoriesTableData";
-// import { fetchSubcategoriesData } from "@/components/admin/siteadmin/DataComponents/SubCategoriesTableData";
-// import { fetchProductsData } from "@/components/admin/siteadmin/DataComponents/ProductsTableData";
-
 import {
     fetchCategoriesData,
     fetchSubcategoriesData,
     fetchProductsData,
+    updateRow,
+    deleteRow,
+    insertRow,
 } from "@/components/admin/siteadmin/DataComponents/APIDataTable";
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogTitle,
+    DialogDescription,
+    DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+type PageType = "Categories" | "Subcategories" | "Products";
 
 const SiteAdminPage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [currentPage, setCurrentPage] = useState("Categories");
+    const [currentPage, setCurrentPage] = useState<PageType>("Categories");
     const [categories, setCategories] = useState<any[]>([]);
     const [subcategories, setSubcategories] = useState<any[]>([]);
     const [products, setProducts] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [newEntry, setNewEntry] = useState<any>({});
+
+    // Wrapper function to handle type casting for setCurrentPage
+    const handleSetCurrentPage = (page: string) => {
+        if (["Categories", "Subcategories", "Products"].includes(page)) {
+            setCurrentPage(page as PageType);
+        }
+    };
 
     useEffect(() => {
         const getData = async () => {
@@ -45,45 +65,85 @@ const SiteAdminPage = () => {
         getData();
     }, [currentPage]);
 
-    const categoryColumns = [
-        { key: "category_id", label: "Category ID" },
-        { key: "category_name", label: "Category Name" },
-        { key: "description", label: "Description" },
-        { key: "type_count", label: "Type Count" },
-        { key: "created_at", label: "Created At" },
-    ];
+    const handleCreate = async () => {
+        try {
+            if (currentPage === "Categories") {
+                await insertRow("categories", newEntry);
+            } else if (currentPage === "Subcategories") {
+                await insertRow("subcategories", newEntry);
+            } else if (currentPage === "Products") {
+                await insertRow("products", newEntry);
+            }
+            setIsDialogOpen(false);
+            location.reload();
+        } catch (err) {
+            console.error("Error creating entry:", err);
+        }
+    };
 
-    const subcategoryColumns = [
-        { key: "subcategory_id", label: "Subcategory ID" },
-        { key: "subcategory_name", label: "Subcategory Name" },
-        { key: "description", label: "Description" },
-        { key: "category_id", label: "Category ID" },
-        { key: "created_at", label: "Created At" },
-    ];
+    const handleEdit = async (row: any) => {
+        try {
+            const updatedValues = { ...row };
+            if (currentPage === "Categories") {
+                await updateRow("categories", row.category_id, updatedValues, "category_id");
+            } else if (currentPage === "Subcategories") {
+                await updateRow("subcategories", row.subcategory_id, updatedValues, "subcategory_id");
+            } else if (currentPage === "Products") {
+                await updateRow("products", row.product_id, updatedValues, "product_id");
+            }
+            location.reload();
+        } catch (err) {
+            console.error("Error updating row:", err);
+        }
+    };
 
-    const productColumns = [
-        { key: "product_id", label: "Product ID" },
-        { key: "product_name", label: "Product Name" },
-        { key: "description", label: "Description" },
-        { key: "price", label: "Price" },
-        { key: "stock_quantity", label: "Stock Quantity" },
-        { key: "created_at", label: "Created At" },
-    ];
+    const handleDelete = async (id: string) => {
+        try {
+            if (currentPage === "Categories") {
+                await deleteRow("categories", id);
+            } else if (currentPage === "Subcategories") {
+                await deleteRow("subcategories", id);
+            } else if (currentPage === "Products") {
+                await deleteRow("products", id);
+            }
+            location.reload();
+        } catch (err) {
+            console.error("Error deleting row:", err);
+        }
+    };
 
+    const columnDefinitions: Record<PageType, { key: string; label: string }[]> = {
+        Categories: [
+            { key: "category_name", label: "Category Name" },
+            { key: "description", label: "Description" },
+        ],
+        Subcategories: [
+            { key: "subcategory_name", label: "Subcategory Name" },
+            { key: "category_id", label: "Category ID" },
+            { key: "description", label: "Description" },
+        ],
+        Products: [
+            { key: "product_name", label: "Product Name" },
+            { key: "category_id", label: "Category ID" },
+            { key: "subcategory_id", label: "Subcategory ID" },
+            { key: "color", label: "Color" },
+            { key: "cost", label: "Cost" },
+            { key: "price", label: "Price" },
+            { key: "stock_quantity", label: "Stock Quantity" },
+        ],
+    };
 
     return (
         <main className="w-full min-h-[100vh] h-full flex flex-row relative bg-black overflow-y-scroll scrollbar-hidden">
-            {/* Sidebar */}
             <Navigation
                 isSidebarOpen={isSidebarOpen}
                 setIsSidebarOpen={setIsSidebarOpen}
-                setCurrentPage={setCurrentPage} // Pass the updater function to Navigation
+                setCurrentPage={handleSetCurrentPage} // Use the wrapper function here
             />
 
-            {/* Main Content */}
             <motion.section
                 animate={{
-                    marginLeft: isSidebarOpen ? "16rem" : "5.5rem", // Adjust margin based on sidebar state
+                    marginLeft: isSidebarOpen ? "16rem" : "5.5rem",
                 }}
                 transition={{
                     type: "spring",
@@ -92,38 +152,62 @@ const SiteAdminPage = () => {
                 }}
                 className="w-full h-full flex flex-col bg-black"
             >
-                {/* HeaderBar */}
                 <HeaderBar />
-
                 <div className="flex flex-col px-10 py-5 gap-5">
-                    {/* Dynamic page title */}
-                    <h1 className="text-4xl text-neutral-200">{currentPage}</h1>
+                    <div className="flex justify-between items-center">
+                        <h1 className="text-4xl text-neutral-200">{currentPage}</h1>
+                        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                            <DialogTrigger asChild>
+                                <Button variant="default">+ Add New</Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogTitle>Add New {currentPage.slice(0, -1)}</DialogTitle>
+                                <DialogDescription>Fill out the details to create a new entry.</DialogDescription>
+                                <div className="space-y-4">
+                                    {columnDefinitions[currentPage].map(({ key, label }) => (
+                                        <Input
+                                            key={key}
+                                            placeholder={`Enter ${label}`}
+                                            onChange={(e) =>
+                                                setNewEntry({ ...newEntry, [key]: e.target.value })
+                                            }
+                                        />
+                                    ))}
+                                </div>
+                                <DialogFooter>
+                                    <Button onClick={handleCreate}>Create</Button>
+                                    <Button variant="secondary" onClick={() => setIsDialogOpen(false)}>
+                                        Cancel
+                                    </Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
 
-                    {/* Dynamic Data Table */}
                     {error ? (
                         <p className="text-red-500">{error}</p>
                     ) : currentPage === "Categories" ? (
                         <DataTable
-                            fetchData={() => Promise.resolve(categories)} // Pass fetched data to DataTable
-                            columns={categoryColumns}
+                            fetchData={() => Promise.resolve(categories)}
+                            columns={columnDefinitions.Categories}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
                         />
                     ) : currentPage === "Subcategories" ? (
                         <DataTable
-                            fetchData={() => Promise.resolve(subcategories)} // Pass fetched data to DataTable
-                            columns={subcategoryColumns}
+                            fetchData={() => Promise.resolve(subcategories)}
+                            columns={columnDefinitions.Subcategories}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
                         />
                     ) : currentPage === "Products" ? (
                         <DataTable
-                            fetchData={() => Promise.resolve(products)} // Pass fetched data to DataTable
-                            columns={productColumns}
+                            fetchData={() => Promise.resolve(products)}
+                            columns={columnDefinitions.Products}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
                         />
                     ) : null}
-
-                    <div className="w-full h-80 border border-neutral-500/50 bg-neutral-800/20 rounded" />
-                    <div className="flex flex-row gap-5 w-full">
-                        <div className="w-1/2 h-60 border border-neutral-500/50 bg-neutral-800/20 rounded" />
-                        <div className="w-1/2 h-60 border border-neutral-500/50 bg-neutral-800/20 rounded" />
-                    </div>
                 </div>
             </motion.section>
         </main>
