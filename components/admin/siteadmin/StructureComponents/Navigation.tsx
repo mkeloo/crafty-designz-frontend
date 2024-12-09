@@ -95,11 +95,11 @@ const Navigation = ({
                     icon: <ChartSpline strokeWidth={2} className="w-5 h-5" />,
                 },
                 {
-                    name: "Archived Projects",
+                    name: "Past Projects",
                     icon: <ArchiveRestore strokeWidth={2} className=" w-5 h-5" />,
                 },
                 {
-                    name: "Create New Project",
+                    name: "Create New",
                     icon: <FilePlus strokeWidth={2} className=" w-5 h-5" />,
                 },
             ],
@@ -192,10 +192,7 @@ const Navigation = ({
                 variants={containerVariants}
                 animate={containerControls}
                 initial="close"
-                style={{
-                    background: 'radial-gradient(circle at top left, rgba(0,255,255,0.25) 0%, #0f172a 20%, #0f172a 40%, #0f172a 60%, #0f172a 80%, #0f172a 100%)'
-                }}
-                className="flex flex-col z-10 gap-20 p-5 shadow shadow-neutral-600 absolute top-0 left-0 h-[100vh] overflow-y-scroll scrollbar-hidden"
+                className="bg-gradient-to-br from-cyan-900 to-[#0f172a] flex flex-col z-10 gap-20 p-5 shadow shadow-neutral-600 absolute top-0 left-0 h-[100vh] overflow-y-scroll scrollbar-hidden"
             >
 
                 <div className="w-full flex flex-row justify-between place-items-center">
